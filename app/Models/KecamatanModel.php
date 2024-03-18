@@ -10,7 +10,7 @@ class KecamatanModel extends Model
 {
     use HasFactory;
     public static function getData(){
-        $data=DB::select("SELECT id_kec as nil,nama as lab FROM bandung_kec");
+        $data=DB::select("SELECT id_kec as nil,nama as lab,dapil FROM bandung_kec");
         return $data;
     }
 

@@ -8,6 +8,7 @@ import Nav from "react-bootstrap/Nav";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import axiosClient from "../axios-client.js";
 import {useEffect} from "react";
+import bedas from "../assets/bedas.png"
 
 export default function DefaultLayout() {
   const {user, token, setUser, setToken} = useStateContext();
@@ -32,25 +33,35 @@ export default function DefaultLayout() {
 
   return (
     <div>
-      <Navbar expand="lg" className="pipnav" style={{paddingLeft:'1rem',paddingRight:'1rem'}}>
+      {/*#68b0ab*/}
+      <Navbar expand="lg" className="pipnav" style={{paddingLeft:'1rem',paddingRight:'1rem',backgroundColor:'#125C61'}}>
         {/*<Container>*/}
-          <Navbar.Brand><Link to="/home" className="nav-link">PKB Kab. Bandung</Link></Navbar.Brand>
+          <Navbar.Brand>
+            <img
+              alt=""
+              src={bedas}
+              width="30"
+              height="30"
+              className="d-inline-block align-top"
+            /> BEDAS
+            {/*<Link to="/home" className="nav-link">BEDAS</Link>*/}
+          </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav"/>
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ms-5">
               <Link to="/home" className="nav-link">
                 {/*<FontAwesomeIcon icon="home"/>*/}
                 Dashboard</Link>
-              <NavDropdown title="Data 2019" id="basic-nav-dropdown">
-                <Link className="dropdown-item" to="">Pemilu 2019</Link>
-                <Link className="dropdown-item" to="">DPT 2019</Link>
-              </NavDropdown>
+              {/*<NavDropdown title="Data 2019" id="basic-nav-dropdown">*/}
+              {/*  <Link className="dropdown-item" to="">Pemilu 2019</Link>*/}
+              {/*  <Link className="dropdown-item" to="">DPT 2019</Link>*/}
+              {/*</NavDropdown>*/}
               {/*<Link to="/home" className="nav-link">Vefikasi Data</Link>*/}
               <NavDropdown title="Struktur" id="basic-nav-dropdown">
-                <Link className="dropdown-item" to="/users/DPC">DPC</Link>
-                <Link className="dropdown-item" to="">PAC</Link>
-                <Link className="dropdown-item" to="">DPRT</Link>
-                <Link className="dropdown-item" to="">DPART</Link>
+                <Link className="dropdown-item" to="/dpc">DPC</Link>
+                <Link className="dropdown-item" to="/dpac">DPAC</Link>
+                <Link className="dropdown-item" to="/dprt">DPRT</Link>
+                <Link className="dropdown-item" to="/dpart">DPART</Link>
               </NavDropdown>
               <NavDropdown title="Program Unggulan" id="basic-nav-dropdown">
                 <Link className="dropdown-item" to="">Insentif Guru Ngaji</Link>
@@ -59,9 +70,9 @@ export default function DefaultLayout() {
                 <Link className="dropdown-item" to="">Data Ruhtilahu</Link>
                 <Link className="dropdown-item" to="">Insentif Ustad/Ustadzah/Takmir & Marbot</Link>
               </NavDropdown>
-              <Link to="/home" className="nav-link">Pendukung</Link>
-              <Link to="/home" className="nav-link">Caleg</Link>
-              <Link to="/home" className="nav-link">Saksi</Link>
+              <Link to="/pdkg" className="nav-link">Pendukung</Link>
+              {/*<Link to="/home" className="nav-link">Caleg</Link>*/}
+              <Link to="/saksi" className="nav-link">Saksi</Link>
               <Link to="/home" className="nav-link">Dokumentasi</Link>
             </Nav>
             <Nav className="ms-auto">

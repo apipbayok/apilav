@@ -4,3 +4,16 @@
 .container-fluid{
   margin-top: 10px;
 }
+.pagconta{
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  margin: 5rem;
+  font-size: 1.2rem;
+}
+
+.pagconta .tmb{
+  /*padding: 6px 18px;*/
+  cursor: pointer;
+  border-radius: 3px;
+}

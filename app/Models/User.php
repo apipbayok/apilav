@@ -50,46 +50,46 @@ class User extends Authenticatable
 
     public static function getUsers($tipe)
     {
-        if ($tipe == "Pendukung") {
-            $dt = DB::select("SELECT
-                    b.nama AS kecamatan,
-                    c.nama AS desa,
-                    a.id,
-                    a.nama,
-                    a.nik,
-                    a.alamat,
-                    a.jk,
-                    a.tplahir,
-                    a.tgllahir,
-                    a.rt,
-                    a.rw,
-                    a.hp,
-                    a.notps
-                FROM
-                    pendukung AS a
-                    INNER JOIN bandung_kec AS b ON a.kecamatan_id = b.id_kec
-                    INNER JOIN bandung_desa AS c ON a.desa_id = c.desa_id");
-        } else {
-            $dt = DB::select("SELECT
-                    b.nama AS kecamatan,
-                    c.nama AS desa,
-                    a.id,
-                    a.nama,
-                    a.nik,
-                    a.alamat,
-                    a.jk,
-                    a.tplahir,
-                    a.tgllahir,
-                    a.rt,
-                    a.rw,
-                    a.hp,
-                    a.notps
-                FROM
-                    users AS a
-                    INNER JOIN bandung_kec AS b ON a.kecamatan_id = b.id_kec
-                    INNER JOIN bandung_desa AS c ON a.desa_id = c.desa_id WHERE a.koor='$tipe'");
-        }
-        return $dt;
+//        if ($tipe == "Pendukung") {
+//            $dt = DB::select("SELECT
+//                    b.nama AS kecamatan,
+//                    c.nama AS desa,
+//                    a.id,
+//                    a.nama,
+//                    a.nik,
+//                    a.alamat,
+//                    a.jk,
+//                    a.tplahir,
+//                    a.tgllahir,
+//                    a.rt,
+//                    a.rw,
+//                    a.hp,
+//                    a.notps
+//                FROM
+//                    pendukung AS a
+//                    INNER JOIN bandung_kec AS b ON a.kecamatan_id = b.id_kec
+//                    INNER JOIN bandung_desa AS c ON a.desa_id = c.desa_id");
+//        } else {
+//            $dt = DB::select("SELECT
+//                    b.nama AS kecamatan,
+//                    c.nama AS desa,
+//                    a.id,
+//                    a.nama,
+//                    a.nik,
+//                    a.alamat,
+//                    a.jk,
+//                    a.tplahir,
+//                    a.tgllahir,
+//                    a.rt,
+//                    a.rw,
+//                    a.hp,
+//                    a.notps
+//                FROM
+//                    users AS a
+//                    INNER JOIN bandung_kec AS b ON a.kecamatan_id = b.id_kec
+//                    INNER JOIN bandung_desa AS c ON a.desa_id = c.desa_id WHERE a.koor='$tipe'");
+//        }
+//        return $dt;
     }
 
 }

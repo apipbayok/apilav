@@ -4,6 +4,8 @@ import {useEffect, useState} from "react";
 import axiosClient from "../../axios-client.js";
 import {isNull} from "lodash/lang.js";
 import {upperCase} from "lodash/string.js";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faWhatsapp} from "@fortawesome/free-brands-svg-icons";
 
 export default function Users() {
   let {tipe} = useParams();
@@ -11,10 +13,27 @@ export default function Users() {
     tipe = "Pendukung"
   }
   const [users, setUsers] = useState([]);
-  // alert(tipe);
+  const [hal,setHal]=useState(1);
+  const [halTot,setHalTot]=useState([]);
+
+  const getUserHal=()=>{
+    axiosClient.get(`/user/${tipe}?Page=${hal}`).then(({data}) => {
+      setUsers(data.data)
+    })
+  }
+
+  const handlePageChange=(pageNumber)=>{
+    console.log(`active page is ${pageNumber}`);
+    this.setState({activePage: pageNumber});
+  }
+
+
   const getUsers = () => {
+    alert(tipe)
     axiosClient.get(`/user/${tipe}`).then(({data}) => {
-      setUsers(data)
+      // console.log(data.data)
+      setHalTot(data.last_page)
+      setUsers(data.data)
     })
   }
   useEffect(() => {
@@ -54,12 +73,16 @@ export default function Users() {
             <td>{u.nama}</td>
             <td>{u.jk}</td>
             <td>{u.tplahir}</td>
-            <td>{u.tgllahir}</td>
+            <td>{u.tglahir}</td>
             <td>{u.alamat}</td>
             <td>{u.kecamatan}</td>
             <td>{u.desa}</td>
             <td>{u.rt}/{u.rw}</td>
-            <td>{u.hp}</td>
+            <td>{u.hp}
+            <Link to={"https://wa.me/"+u.hp.replace("0","+62")} target="_blank">
+              <FontAwesomeIcon icon={faWhatsapp} />
+            </Link>
+              </td>
             <td>
               <button className="btn btn-sm btn-warning">
                 <Link className="nav-link" to={'/users/' + tipe + '/' + u.id}>Edit</Link>

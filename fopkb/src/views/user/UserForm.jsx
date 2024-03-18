@@ -11,6 +11,7 @@ export default function UserForm() {
 
   const nav = useNavigate();
   let {id} = useParams();
+  let {tipe} = useParams();
   const [user, setUser] = useState({
     id: null, nik: "", nama: "", alamat: "",
     jk: "L", tplahir: "", tgllahir: "", agama: "", rt: 0, rw: 0,

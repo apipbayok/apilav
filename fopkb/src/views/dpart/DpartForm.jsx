@@ -5,24 +5,18 @@ import axiosClient from "../../axios-client.js";
 import {useNavigate, useParams} from "react-router-dom";
 import {useStateContext} from "../../context/ContextProvider.jsx";
 
-export default function UserForm() {
+export default function DpartForm() {
   const [kecs, setKecs] = useState([]);
   const [desas, setDesas] = useState([]);
-  const [segmens, setSegmens] = useState([]);
 
   const nav = useNavigate();
   let {id} = useParams();
   let {tipe} = useParams();
   const [user, setUser] = useState({
     id: null, nik: "", nama: "", alamat: "",
-    jk: "L", tplahir: "", tglahir: "", agama: "", rt: 0, rw: 0, dapil:1,
-    hp: "", tpsno: 0, kec_id: 1, desa_id: 1, stkawin: "TIDAK KAWIN", pekerjaan: "TIDAK BEKERJA", koo: tipe.toUpperCase(),
+    jk: "L", tplahir: "", tgllahir: "", agama: "", rt: 0, rw: 0,
+    hp: "", notps: 0, kecamatan: 1, desa: 1, kawin: "TIDAK KAWIN", pekerjaan: "TIDAK BEKERJA", koor: "DPC",
   })
-  // setUser(...user.koor=tipe.toUpperCase());
-  if (tipe === "" || tipe==null) {
-    tipe = "Pendukung";
-    setUser(...user.koor=tipe.toUpperCase());
-  }
   const {setNotif} = useStateContext();
 
   if (id) {
@@ -31,10 +25,25 @@ export default function UserForm() {
         setUser(data)
         getKecById()
         getDesaById()
-        getSeg();
       })
     })
   }
+
+  const [nik, setNik] = useState();
+  const [nama, setNama] = useState();
+  const [alamat, setAlamat] = useState();
+  const [jk, setJk] = useState();
+  const [tplahir, setTplahir] = useState();
+  const [tgllahir, setTgllahir] = useState();
+  const [agama, setAgama] = useState();
+  const [rt, setRt] = useState();
+  const [rw, setRw] = useState();
+  const [hp, setHp] = useState();
+  const [notps, setNotps] = useState();
+  const [kecamatan, setKecamatan] = useState(1);
+  const [desa, setDesa] = useState(1);
+  const [kawin, setKawin] = useState();
+  const [pekerjaan, setPekerjaan] = useState();
 
   const lsAgama = [
     {nil: "ISLAM", lab: "ISLAM"},
@@ -74,7 +83,6 @@ export default function UserForm() {
 
   const onSubmit = ev => {
     ev.preventDefault()
-    // console.log(user);
     if (user.id) {
       axiosClient.put(`/users/${user.id}`, user)
         .then(() => {
@@ -84,9 +92,9 @@ export default function UserForm() {
         console.log(err)
       })
     } else {
-      axiosClient.post("/svUser", user)
+      axiosClient.post("/users", user)
         .then(() => {
-          // console.log(user);
+          console.log(user);
           setNotif("Data tersimpan")
           nav("/users")
         }).catch(err => {
@@ -101,36 +109,27 @@ export default function UserForm() {
         setKecs(data)
       })
   }
-  const getSeg = () => {
-    axiosClient.get("/getSeg")
-      .then(({data}) => {
-        setSegmens(data)
-      })
-  }
   const getKecById = () => {
-    axiosClient.get(`/lsKec/${user.kec_id}`)
+    axiosClient.get(`/lsKec/${user.kecamatan}`)
       .then(({data}) => {
         setKecs(data)
       })
   }
   const getDesa = () => {
-    axiosClient.get(`/lsDesa/${user.kec_id}`)
+    axiosClient.get(`/lsDesa/${kecamatan}`)
       .then(({data}) => {
         setDesas(data)
       })
   }
 
   const getDesaById = () => {
-    axiosClient.get(`/getDesa/${user.desa_id}`)
+    axiosClient.get(`/getDesa/${user.desa}`)
       .then(({data}) => {
         setDesas(data)
       })
   }
-  const kecChangeHandle = (event,dapilNo) => {
-    // setKecamatan(event);
-    // console.log(dapilNo);
-    setUser({...user,kec_id:event});
-    setUser({...user.dapil=dapilNo});
+  const kecChangeHandle = (event) => {
+    setKecamatan(event);
     axiosClient.get(`/lsDesa/${event}`)
       .then(({data}) => {
         setDesas(data)
@@ -141,12 +140,11 @@ export default function UserForm() {
   useEffect(() => {
     getKec();
     getDesa();
-    getSeg();
   }, []);
 
   return (
     <div className="container-fluid">
-      <h2>Form Data {tipe.toUpperCase()}</h2>
+      <h2>Form Data DPART</h2>
       <Form onSubmit={onSubmit} className="inline-form">
         <Row>
           <Col className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
@@ -154,41 +152,41 @@ export default function UserForm() {
               <CardBody>
                 <Form.Group className="mb-3">
                   <Form.Label>NIK</Form.Label>
-                  <Form.Control type="text" placeholder="NIK" value={user.nik} onChange={(e) => setUser({...user,nik:e.target.value})}/>
+                  <Form.Control type="text" placeholder="NIK" value={nik} onChange={(e) => setNik(e.target.value)}/>
                 </Form.Group>
                 <Form.Group className="mb-3">
                   <Form.Label>Nama</Form.Label>
-                  <Form.Control type="text" placeholder="Nama" value={user.nama} onChange={(e) =>setUser({...user,nama:e.target.value})}/>
+                  <Form.Control type="text" placeholder="Nama" value={nama} onChange={(e) => setNama(e.target.value)}/>
                 </Form.Group>
                 <Form.Label>Jenis Kelamin</Form.Label>
-                <Form.Select aria-label="Default select" value={user.jk} onChange={(e) => setUser({...user,jk:e.target.value})}>
+                <Form.Select aria-label="Default select" value={jk} onChange={(e) => setJk(e.target.value)}>
                   <option value="L">Laki-laki</option>
                   <option value="P">Perempuan</option>
                 </Form.Select>
                 <Form.Group className="mb-3">
                   <Form.Label>Tempat Lahir</Form.Label>
-                  <Form.Control type="text" placeholder="Tempat Lahir" value={user.tplahir}
-                                onChange={(e) => setUser({...user,tplahir:e.target.value})}/>
+                  <Form.Control type="text" placeholder="Tempat Lahir" value={tplahir}
+                                onChange={(e) => setTplahir(e.target.value)}/>
                 </Form.Group>
                 <Form.Group className="mb-3">
                   <Form.Label>Tanggal Lahir</Form.Label>
-                  <Form.Control type="date" value={user.tglahir} onChange={(e) => setUser({...user,tglahir:e.target.value})}/>
+                  <Form.Control type="date" value={tgllahir} onChange={(e) => setTgllahir(e.target.value)}/>
                 </Form.Group>
                 <Form.Group className="mb-3">
                   <Form.Label>Alamat</Form.Label>
-                  <Form.Control type="text" placeholder="Alamat" value={user.alamat}
-                                onChange={(e) => setUser({...user,alamat:e.target.value})}/>
+                  <Form.Control type="text" placeholder="Alamat" value={alamat}
+                                onChange={(e) => setAlamat(e.target.value)}/>
                 </Form.Group>
                 <Form.Group className="mb-3">
                   <Form.Label>RT/RW/TPS/HP</Form.Label>
                   <Row>
-                    <Col><Form.Control value={user.rt} onChange={(e) => setUser({...user,rt:e.target.value})} type="number"
+                    <Col><Form.Control value={rt} onChange={(e) => setRt(e.target.value)} type="number"
                                        placeholder="RT"/></Col>
-                    <Col><Form.Control value={user.rw} onChange={(e) => setUser({...user,rw:e.target.value})} type="number"
+                    <Col><Form.Control value={rw} onChange={(e) => setRw(e.target.value)} type="number"
                                        placeholder="RW"/></Col>
-                    <Col><Form.Control value={user.tpsno} onChange={(e) => setUser({...user,tpsno:e.target.value})} type="number"
+                    <Col><Form.Control value={notps} onChange={(e) => setNotps(e.target.value)} type="number"
                                        placeholder="No. TPS"/></Col>
-                    <Col><Form.Control value={user.hp} onChange={(e) => setUser({...user,hp:e.target.value})} type="text"
+                    <Col><Form.Control value={hp} onChange={(e) => setHp(e.target.value)} type="text"
                                        placeholder="No.HP"/></Col> </Row>
                 </Form.Group>
               </CardBody>
@@ -198,38 +196,33 @@ export default function UserForm() {
             <Card>
               <CardBody>
                 <Form.Label>Kecamatan</Form.Label>
-                <Form.Select aria-label="Default select" value={user.kecamatan} onChange={(e) => kecChangeHandle(e.target.value,e.target[e.target.selectedIndex].getAttribute('data-dapil'))}>
-                  {kecs.map(u => (<option data-dapil={u.dapil} value={u.nil}>{u.lab}</option>))}
+                <Form.Select aria-label="Default select" value={kecamatan}
+                             onChange={(e) => kecChangeHandle(e.target.value)}>
+                  {kecs.map(u => (<option value={u.nil}>{u.lab}</option>))}
                 </Form.Select>
                 <Form.Group>
                   <Form.Label>Desa</Form.Label>
-                  <Form.Select aria-label="Default select" value={user.desa_id} onChange={(e) => setUser({...user,desa_id:e.target.value})}>
+                  <Form.Select aria-label="Default select" value={desa} onChange={(e) => setDesa(e.target.value)}>
                     {desas.map(u => (<option value={u.nil}>{u.lab}</option>))}
                   </Form.Select>
                 </Form.Group>
                 <Form.Group>
                   <Form.Label>Status Perkawinan</Form.Label>
-                  <Form.Select aria-label="Default select" value={user.stkawin} onChange={(e) => setUser({...user,stkawin:e.target.value})}>
+                  <Form.Select aria-label="Default select" value={kawin} onChange={(e) => setKawin(e.target.value)}>
                     {lsStKawin.map(u => (<option value={u.nil}>{u.lab}</option>))}
                   </Form.Select>
                 </Form.Group>
                 <Form.Group>
                   <Form.Label>Agama</Form.Label>
-                  <Form.Select aria-label="Default select" value={user.agama} onChange={(e) => setUser({...user,agama:e.target.value})}>
+                  <Form.Select aria-label="Default select" value={agama} onChange={(e) => setAgama(e.target.value)}>
                     {lsAgama.map(u => (<option value={u.nil}>{u.lab}</option>))}
                   </Form.Select>
                 </Form.Group>
                 <Form.Group>
                   <Form.Label>Pekerjaan</Form.Label>
-                  <Form.Select aria-label="Default select" value={user.pekerjaan}
-                               onChange={(e) => setUser({...user,pekerjaan:e.target.value})}>
+                  <Form.Select aria-label="Default select" value={pekerjaan}
+                               onChange={(e) => setPekerjaan(e.target.value)}>
                     {lsPekerjaan.map(u => (<option value={u.nil}>{u.lab}</option>))}
-                  </Form.Select>
-                </Form.Group>
-                <Form.Group>
-                  <Form.Label>Segmen</Form.Label>
-                  <Form.Select aria-label="Default select" value={user.segmen_id} onChange={(e) => setUser({...user,segmen_id:e.target.value})}>
-                    {segmens.map(u => (<option value={u.nil}>{u.lab}</option>))}
                   </Form.Select>
                 </Form.Group>
               </CardBody>

@@ -3,15 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rules\Password;
 
-class StoreUserRequest extends FormRequest
+class StorePendukungRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
     public function authorize()
     {
         return true;
@@ -22,29 +16,34 @@ class StoreUserRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
+
+    // KE TABEL AIO_PENDUKUNG MENYIMPAN SEMUA DATA PENDUKUNG, SEGMEN DAN KOORDINATOR
+
+
     public function rules()
     {
-        //////SIMPAN DATA UPENGGUNA SISTEM
         return [
             'nama' => 'required|string|max:55',
-            'nik' => 'required|string|unique:users,nik',
-            "koor"=>'required|string',
+            'nik' => 'required|string|unique:m_aiodukungan,nik',
+            "koo" => 'string',
             'alamat' => 'required|string',
             'jk' => 'required|string',
             'tplahir' => 'required|string',
-            'tgllahir' => 'required',
-            'agama' => 'required|string',
+            'tglahir' => 'required',
+            'agama' => 'string',
             'rt' => 'required',
             'rw' => 'required',
             'hp' => 'required|string',
-            'notps' => 'required',
-            'kecamatan_id' => 'required|numeric',
+            'kec_id' => 'required|numeric',
             'desa_id' => 'required|numeric',
-            'kawin' => 'required',
-            'pekerjaan' => 'required',
+            'stkawin' => 'string',
+            'pekerjaan' => 'string',
+            'dapil' => 'numeric',
+            'tpsno' => 'numeric',
+            'segmen_id' => 'numeric',
+            'subsegmen_id' => 'numeric',
+            'created_by' => 'numeric',
             'parent' => 'numeric',
-            'segmen_id'=>'numeric',
-            'subsegmen_id'=>'numeric'
         ];
 
     }

@@ -43,7 +43,7 @@ export default function Login() {
           <Button variant="primary" type="submit">
             Login
           </Button>
-          <p className="message">Belum Terdaftar? <Link to="/daftar">Buat Akun</Link></p>
+
         </Form>
       </div>
     </div>

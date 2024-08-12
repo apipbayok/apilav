@@ -22,6 +22,10 @@ class SignupRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
+
+     // TABEL USER-- PEMBUATAN USER LOGIN
+
+
     public function rules()
     {
         return [
@@ -37,10 +41,13 @@ class SignupRequest extends FormRequest
             'rw' => ['required'],
             'hp' => ['required', 'string'],
             'notps' => ['required'],
-            'kecamatan' => ['required','numeric'],
-            'desa' => ['required','numeric'],
+            'kecamatan_id' => ['required','numeric'],
+            'desa_id' => ['required','numeric'],
             'kawin' => ['required', 'string'],
             'pekerjaan' => ['required', 'string'],
+            'parent'=>['numeric'],
+            'segmen_id'=>['numeric'],
+            'subsegmen_id'=>['numeric']
         ];
     }
 }

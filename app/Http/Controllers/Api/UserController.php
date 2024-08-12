@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use http\Env\Response;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
@@ -31,11 +32,6 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
-//        $dt=DB::table("user")
-//            ->join("bb","","=","")
-//            ->join("bb","","=","")
-//            ->select()
-//            ->paginate();
         $data = $request->validated();
         $data['password'] = bcrypt($data['password']);
         $user = User::create($data);
@@ -81,7 +77,25 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         $user->delete();
-
         return response("", 204);
+    }
+
+    public function getKorKecdt($id){
+        $data=User::getkorcamqr($id);
+        return response()->json($data);
+    }
+
+    public function getKorDesdt($id){
+        $data=User::getkordesqr($id);
+        return response()->json($data);
+    }
+    public function getKorrwdt($kecid,$desaid,$norw){
+        $data=User::getkorrwqr($kecid,$desaid,$norw);
+        return response()->json($data);
+    }
+
+    public function getStruk(){
+        $data=User::getStrukturData();
+        return response()->json($data);
     }
 }

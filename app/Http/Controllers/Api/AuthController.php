@@ -33,34 +33,37 @@ class AuthController extends Controller
         $data = $request->validated();
 //        print_r($data);
         /** @var \App\Models\User $user */
-        $user=User::create([
+        $user = User::create([
             "nama" => $data["nama"],
             "nik" => $data["nik"],
             "koor" => $data["koor"],
             "password" => bcrypt($data["hp"]),
-            "alamat"=>$data['alamat'],
-            "jk"=>$data['jk'],
-            "tplahir"=>$data['tplahir'],
-            "tgllahir"=>$data['tgllahir'],
-            "agama"=>$data['agama'],
-            "rt"=>$data['rt'],
-            "rw"=>$data['rw'],
-            "hp"=>$data['hp'],
-            "notps"=>$data['notps'],
-            "kecamatan_id"=>$data['kecamatan'],
-            "desa_id"=>$data['desa'],
-            "kawin"=>$data['kawin'],
-            "pekerjaan"=>$data['pekerjaan'],
+            "alamat" => $data['alamat'],
+            "jk" => $data['jk'],
+            "tplahir" => $data['tplahir'],
+            "tgllahir" => $data['tgllahir'],
+            "agama" => $data['agama'],
+            "rt" => $data['rt'],
+            "rw" => $data['rw'],
+            "hp" => $data['hp'],
+            "notps" => $data['notps'],
+            "kecamatan_id" => $data['kecamatan_id'],
+            "desa_id" => $data['desa_id'],
+            "kawin" => $data['kawin'],
+            "pekerjaan" => $data['pekerjaan'],
+            "segmen_id" => $data['segmen_id'],
+            "subsegmen_id" => $data['subsegmen_id'],
+            "parent" => isset($data['parent']) ? $data['parent'] : null,
         ]);
         $token = $user->createToken("main")->plainTextToken;
-        return response(compact("user","token"));
+        return response(compact("user", "token"));
     }
 
     public function logout(Request $request)
     {
         /** @var \App\Models\User $user */
-        $user=$request->user();
+        $user = $request->user();
         $user->currentAccessToken()->delete();
-        return response("",204);
+        return response("", 204);
     }
 }

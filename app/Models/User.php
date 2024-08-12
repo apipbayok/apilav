@@ -35,7 +35,10 @@ class User extends Authenticatable
         'desa_id',
         'kawin',
         'pekerjaan',
-        'password'
+        'password',
+        'parent',
+        'segmen_id',
+        'subsegmen_id'
     ];
 
     /**
@@ -50,46 +53,27 @@ class User extends Authenticatable
 
     public static function getUsers($tipe)
     {
-//        if ($tipe == "Pendukung") {
-//            $dt = DB::select("SELECT
-//                    b.nama AS kecamatan,
-//                    c.nama AS desa,
-//                    a.id,
-//                    a.nama,
-//                    a.nik,
-//                    a.alamat,
-//                    a.jk,
-//                    a.tplahir,
-//                    a.tgllahir,
-//                    a.rt,
-//                    a.rw,
-//                    a.hp,
-//                    a.notps
-//                FROM
-//                    pendukung AS a
-//                    INNER JOIN bandung_kec AS b ON a.kecamatan_id = b.id_kec
-//                    INNER JOIN bandung_desa AS c ON a.desa_id = c.desa_id");
-//        } else {
-//            $dt = DB::select("SELECT
-//                    b.nama AS kecamatan,
-//                    c.nama AS desa,
-//                    a.id,
-//                    a.nama,
-//                    a.nik,
-//                    a.alamat,
-//                    a.jk,
-//                    a.tplahir,
-//                    a.tgllahir,
-//                    a.rt,
-//                    a.rw,
-//                    a.hp,
-//                    a.notps
-//                FROM
-//                    users AS a
-//                    INNER JOIN bandung_kec AS b ON a.kecamatan_id = b.id_kec
-//                    INNER JOIN bandung_desa AS c ON a.desa_id = c.desa_id WHERE a.koor='$tipe'");
-//        }
-//        return $dt;
+
     }
 
+    public static function getkorcamqr($idkec)
+    {
+        return DB::select("SELECT * FROM users WHERE kecamatan_id=$idkec AND koor='KORCAM'");
+    }
+    public static function getkordesqr($iddesa)
+    {
+        return DB::table('users')->where("desa_id",$iddesa)->where("koor","KORDES")->get();
+    }
+    public static function getkorrwqr($idkec,$iddesa,$norw)
+    {
+        return DB::table('users')->where("desa_id",$iddesa)->where("kecamatan_id",$idkec)->where("rw",$norw)->where("koor","KORRW")->get();
+    }
+//    public static function getkorrwqr($data)
+//    {
+//
+//    }
+    public static function getStrukturData()
+    {
+        return DB::select("SELECT COUNT(id)as nil,koor FROM users WHERE !ISNULL(koor) GROUP BY koor");
+    }
 }

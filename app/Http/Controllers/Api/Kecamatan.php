@@ -12,7 +12,10 @@ class Kecamatan extends Controller
         $dt=KecamatanModel::getData();
         return response()->json($dt);
     }
-
+    public function alldpt(){
+        $dt=KecamatanModel::getalldpt();
+        return response()->json($dt);
+    }
     public function getKecByID($id){
         $dt=KecamatanModel::getDataById($id);
         return response()->json($dt);

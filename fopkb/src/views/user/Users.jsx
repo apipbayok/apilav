@@ -2,8 +2,6 @@ import {Link, useParams} from "react-router-dom";
 import {Row, Table} from "react-bootstrap";
 import {useEffect, useState} from "react";
 import axiosClient from "../../axios-client.js";
-import {isNull} from "lodash/lang.js";
-import {upperCase} from "lodash/string.js";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faWhatsapp} from "@fortawesome/free-brands-svg-icons";
 
@@ -13,14 +11,14 @@ export default function Users() {
     tipe = "Pendukung"
   }
   const [users, setUsers] = useState([]);
-  const [hal,setHal]=useState(1);
-  const [halTot,setHalTot]=useState([]);
+  // const [hal,setHal]=useState(1);
+  // const [halTot,setHalTot]=useState([]);
 
-  const getUserHal=()=>{
-    axiosClient.get(`/user/${tipe}?Page=${hal}`).then(({data}) => {
-      setUsers(data.data)
-    })
-  }
+  // const getUserHal=()=>{
+  //   axiosClient.get(`/user/${tipe}?Page=${hal}`).then(({data}) => {
+  //     setUsers(data.data)
+  //   })
+  // }
 
   const handlePageChange=(pageNumber)=>{
     console.log(`active page is ${pageNumber}`);
@@ -32,7 +30,7 @@ export default function Users() {
     alert(tipe)
     axiosClient.get(`/user/${tipe}`).then(({data}) => {
       // console.log(data.data)
-      setHalTot(data.last_page)
+      // setHalTot(data.last_page)
       setUsers(data.data)
     })
   }
